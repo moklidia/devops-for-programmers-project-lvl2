@@ -1,4 +1,6 @@
 # Определяем коллекцию
 # https://galaxy.ansible.com/community/docker
 collections:
-- name: community.docker
+- name:
+  - community.docker
+  - community.docker.docker_compose
