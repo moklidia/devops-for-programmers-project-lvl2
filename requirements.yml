@@ -3,4 +3,5 @@
 collections:
 - name:
   - community.docker
-  - community.docker.docker_compose
+roles:
+  - datadog.datadog

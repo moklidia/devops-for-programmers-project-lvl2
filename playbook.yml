@@ -34,3 +34,11 @@
           REDMINE_DB_DATABASE: "{{ db_name }}"
           REDMINE_DB_USERNAME: "{{ db_username }}"
           REDMINE_DB_PORT: "{{ db_port }}"
+
+- hosts: webservers
+  remote_user: root
+  roles:
+    - { role: datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: '{{ datadog_api_key }}'
+    datadog_site: '{{ datadog_site }}'
