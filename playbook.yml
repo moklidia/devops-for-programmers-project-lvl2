@@ -12,18 +12,6 @@
     - name: Install Docker Module for Python
       ansible.builtin.pip:
         name: docker
-
-    # - name: Add environment variables to the environment file
-    #   ansible.builtin.lineinfile:
-    #     path: /etc/environment
-    #     line: "{{ item.name }}={{ item.value }}"
-    #   with_items:
-    #   - { name: REDMINE_DB_PASSWORD, value: "{{ db_password }}" }
-    #   - { name: REDMINE_DB_HOST, value: "{{ db_host }}" }
-    #   - { name: REDMINE_DB_NAME, value: "{{ db_name }}" }
-    #   - { name: REDMINE_DB_USERNAME, value: "{{ db_username }}" }
-    #   - { name: REDMINE_DB_PORT, value: "{{ db_port }}" }
-    #   # - { name: REDMINE_DB_POSTGRES, value: "{{ db_host }}" }
  
 - name: Deploy application
   hosts: webservers
@@ -40,10 +28,9 @@
         restart: yes
         container_default_behavior: no_defaults
         pull: yes
-        # env:
-        #   REDMINE_DB_PASSWORD: "{{ db_password }}"
-        #   REDMINE_DB_HOST: "{{ db_host }}"
-        #   REDMINE_DB_NAME: "{{ db_name }}"
-        #   REDMINE_DB_USERNAME: "{{ db_username }}"
-        #   REDMINE_DB_PORT: "{{ db_port }}"
-        #   REDMINE_DB_POSTGRES: "{{ db_host }}"
+        env:
+          REDMINE_DB_PASSWORD: "{{ db_password }}"
+          REDMINE_DB_POSTGRES: "{{ db_host }}"
+          REDMINE_DB_DATABASE: "{{ db_name }}"
+          REDMINE_DB_USERNAME: "{{ db_username }}"
+          REDMINE_DB_PORT: "{{ db_port }}"
