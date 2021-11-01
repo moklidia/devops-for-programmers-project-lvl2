@@ -1,7 +1,5 @@
 - name: Prepare webservers
   hosts: all
-  gather_facts: yes
-  remote_user: root
   tasks:
     - name: Install packages
       ansible.builtin.apt:
