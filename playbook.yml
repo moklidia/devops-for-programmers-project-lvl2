@@ -10,6 +10,10 @@
     - name: Install Docker Module for Python
       ansible.builtin.pip:
         name: docker
+
+    - name: Install Datatog Module for Python
+      ansible.builtin.pip:
+        name: datadog
  
 - name: Deploy application
   hosts: webservers
@@ -37,6 +41,13 @@
   remote_user: root
   roles:
     - { role: datadog.datadog, become: yes }
-  vars:
-    datadog_api_key: '{{ datadog_api_key }}'
-    datadog_site: '{{ datadog_site }}'
+  tasks:
+    - name: Create a metric monitor
+      community.general.datadog_monitor:
+        type: "metric alert"
+        name: "Host monitor"
+        state: "present"
+        query: '"datadog.agent.up".over("host:docker-ubuntu-s-1vcpu-1gb-nyc1-01").last(2).count_by_status()'
+        notification_message: "Host [[host.name]] with IP [[host.ip]] is failing to report to datadog."
+        api_key: "{{ vault_datadog_api_key }}"
+        app_key: "{{ vault_datadog_app_key }}"

@@ -1,4 +1,5 @@
 collections:
-  - name: community.docker
+  - community.docker
+  - community.general.datadog_monitor
 roles:
   - datadog.datadog
